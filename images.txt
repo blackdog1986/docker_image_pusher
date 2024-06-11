@@ -1,4 +1,4 @@
 alpine
-python:jellyfin:latest
+jellyfin:latest
 
 
