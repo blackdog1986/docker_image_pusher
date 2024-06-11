@@ -24,7 +24,10 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
       
-run: |
+
+          
+    - name: Build and push image Aliyun
+    run: |
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
         while IFS= read -r line; do
           [[ -z "$line" ]] && continue
@@ -32,10 +35,7 @@ run: |
           docker pull $line
           platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
           echo "platform is $platform"
-          
-    - name: Build and push image Aliyun
-      
-          # 如果存在架构信息 将架构信息拼到镜像名称前面
+       # 如果存在架构信息 将架构信息拼到镜像名称前面
           if [ -z "$platform" ]; then
               platform_prefix=""
           else
